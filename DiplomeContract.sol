@@ -57,9 +57,12 @@ contract DiplomeContract{
   mapping(uint256 => Etablisement) public Etablisements;
   mapping(address => uint256) AddressEtablisements;
   mapping(uint256 => Diplome) public Diplomes;
-  
+  mapping(uint256 => Entreprise) public Entreprises;
+  mapping(address => uint256) public AddressEntreprises;
+
   uint256 public NbEtablisements;
   uint256 public NbDiplomes;
+  uint256 public NbEntreprises;
 
   // Un agent d’un établissement d’enseignement supérieur peut créer un compte pour
   // son établissement qui va servir à enregistrer les jeunes diplômés et leurs diplômes.
@@ -79,9 +82,16 @@ function ceate_student_onStage(Etudiant memory e) private {
         Etudiants[NbEtudiants] = e;
     }
     
-    function update_student(Diplome memory d)private{
+function update_student(Diplome memory d)private{
         NbDiplomes += 1;
         Diplomes[NbDiplomes] = d;
+}
+
+// Un agent de recrutement peut créer un compte pour son entreprise.
+function create_entreprise_account(Entreprise memory e, address a) private {
+    NbEntreprises += 1;
+    Entreprises[NbEntreprises] = e;
+    AddressEntreprises[a] = NbEntreprises;
 }
 
 }
