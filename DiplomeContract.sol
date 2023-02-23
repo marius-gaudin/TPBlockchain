@@ -103,6 +103,12 @@ contract DiplomeContract {
         Diplomes[NbDiplomes] = d;
     }
 
+    function create_diplome(Diplome memory d) private {
+        d.exist = true;
+        NbDiplomes += 1;
+        Diplomes[NbDiplomes] = d;
+    }
+
     // Un agent de recrutement peut créer un compte pour son entreprise.
     function create_entreprise_account(
         string memory nom, 
@@ -129,6 +135,30 @@ contract DiplomeContract {
             NbEntreprises += 1;
             Entreprises[NbEntreprises] = e;
             AddressEntreprises[msg.sender] = NbEntreprises;
+    }
+
+function add_diplome(
+    uint256 id_titulaire, 
+    string memory nom_etablisement, 
+    uint256 id_etablisement, 
+    string memory pays, 
+    string memory typeEtablissement, 
+    string memory specialite, 
+    string memory mention, 
+    uint256 date_obtention) public {
+        require(AddressEtablisements[msg.sender] == id_etablisement, "not authorized to create diploma for this establishment");
+        require(Etudiants[id_titulaire].exists == true, "student does not exist");
+        
+        Diplome memory d;
+        d.EtudiantId = id_titulaire;
+        d.NomEtablissement = nom_etablisement;
+        d.EtablissementId = id_etablisement;
+        d.Pays = pays;
+        d.Type = typeEtablissement;
+        d.Specialite = specialite;
+        d.Mention = mention;
+        d.DateObtention = date_obtention;
+        create_diplome(d);
     }
 
 }
