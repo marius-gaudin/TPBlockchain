@@ -69,11 +69,11 @@ contract DiplomeContract{
       AddressEtablisements[a] = NbEtablisements;
   }
 
-  function cr /**Un agent d’un établissement d’enseignement supérieur peut créer et sauvegarder
+ /**Un agent d’un établissement d’enseignement supérieur peut créer et sauvegarder
   un profil pour un étudiant lorsque ce dernier commence son stage de fin d’étude.
   - Un agent d’un établissement d’enseignement supérieur peut ajouter un diplôme et mettre à jour les informations de son titulaire.
   **/
-ceate_student_onStage(Etudiant memory e) private {
+function ceate_student_onStage(Etudiant memory e) private {
         e.exist = true;
         NbEtudiants += 1;
         Etudiants[NbEtudiants] = e;
