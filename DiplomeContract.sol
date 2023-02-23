@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
-contract DiplomeContract{
+contract DiplomeContract {
+  address private owner;
 
   struct Etablisement {
       string Nom;
@@ -55,19 +56,18 @@ contract DiplomeContract{
   }
 
   mapping(uint256 => Etablisement) public Etablisements;
-  mapping(address => uint256) AddressEtablisements;
+  mapping(address => uint256) AddressAgents;
   mapping(uint256 => Diplome) public Diplomes;
   mapping(uint256 => Entreprise) public Entreprises;
   mapping(address => uint256) public AddressEntreprises;
 
-  uint256 public NbEtablisements;
+  uint256 public NbAgents;
   uint256 public NbDiplomes;
   uint256 public NbEntreprises;
 
-    constructor(address tokenaddress) public {
-        token = tokenaddress;
+    constructor() {
         owner = msg.sender;
-        NbEtablisements = 0;
+        NbAgents = 0;
         NbEntreprises = 0;
         NbDiplomes = 0;
     }
@@ -75,10 +75,16 @@ contract DiplomeContract{
     
   // Un agent d’un établissement d’enseignement supérieur peut créer un compte pour
   // son établissement qui va servir à enregistrer les jeunes diplômés et leurs diplômes.
-  function create_etablissement_account(Etablisement memory e, address a) private {
-      NbEtablisements += 1;
-      Etablisements[NbEtablisements] = e;
-      AddressEtablisements[a] = NbEtablisements;
+  function create_etablissement_account(string memory nom, string memory pays, string memory adresse, string memory siteWeb) public {
+      Etablisement memory e;
+      e.Nom = nom;
+      e.Pays = pays;
+      e.Adresse = adresse;
+      e.SiteWeb = siteWeb;
+      NbAgents += 1;
+      e.AgentId = NbAgents;
+      AddressAgents[msg.sender] = e.AgentId;
+      Etablisements[e.AgentId] = e;
   }
 
  /**Un agent d’un établissement d’enseignement supérieur peut créer et sauvegarder
@@ -86,10 +92,10 @@ contract DiplomeContract{
   - Un agent d’un établissement d’enseignement supérieur peut ajouter un diplôme et mettre à jour les informations de son titulaire.
   **/
 function ceate_student_onStage(Etudiant memory e) private {
-        e.exist = true;
-        NbEtudiants += 1;
-        Etudiants[NbEtudiants] = e;
-    }
+    e.exist = true;
+    NbEtudiants += 1;
+    Etudiants[NbEtudiants] = e;
+}
     
 function update_student(Diplome memory d)private{
         NbDiplomes += 1;
