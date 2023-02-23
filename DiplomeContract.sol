@@ -60,10 +60,12 @@ contract DiplomeContract {
   mapping(uint256 => Diplome) public Diplomes;
   mapping(uint256 => Entreprise) public Entreprises;
   mapping(address => uint256) public AddressEntreprises;
+  mapping(uint256 => Etudiant) Etudiants;
 
   uint256 public NbAgents;
   uint256 public NbDiplomes;
   uint256 public NbEntreprises;
+  uint256 public NbEtudiants;
 
   constructor() {
       owner = msg.sender;
@@ -87,26 +89,25 @@ contract DiplomeContract {
       Etablisements[e.AgentId] = e;
   }
 
- /**Un agent d’un établissement d’enseignement supérieur peut créer et sauvegarder
-  un profil pour un étudiant lorsque ce dernier commence son stage de fin d’étude.
-  - Un agent d’un établissement d’enseignement supérieur peut ajouter un diplôme et mettre à jour les informations de son titulaire.
-  **/
-function ceate_student_onStage(Etudiant memory e) private {
-    e.exist = true;
-    NbEtudiants += 1;
-    Etudiants[NbEtudiants] = e;
-}
-    
-function update_student(Diplome memory d)private{
+    /**Un agent d’un établissement d’enseignement supérieur peut créer et sauvegarder
+    un profil pour un étudiant lorsque ce dernier commence son stage de fin d’étude.
+    - Un agent d’un établissement d’enseignement supérieur peut ajouter un diplôme et mettre à jour les informations de son titulaire.
+    **/
+    function ceate_student_onStage(Etudiant memory e) private {
+        NbEtudiants += 1;
+        Etudiants[NbEtudiants] = e;
+    }
+        
+    function update_student(Diplome memory d)private{
         NbDiplomes += 1;
         Diplomes[NbDiplomes] = d;
-}
+    }
 
-// Un agent de recrutement peut créer un compte pour son entreprise.
-function create_entreprise_account(Entreprise memory e, address a) private {
-    NbEntreprises += 1;
-    Entreprises[NbEntreprises] = e;
-    AddressEntreprises[a] = NbEntreprises;
-}
+    // Un agent de recrutement peut créer un compte pour son entreprise.
+    function create_entreprise_account(Entreprise memory e, address a) public {
+        NbEntreprises += 1;
+        Entreprises[NbEntreprises] = e;
+        AddressEntreprises[a] = NbEntreprises;
+    }
 
 }
