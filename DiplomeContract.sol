@@ -65,22 +65,22 @@ contract DiplomeContract {
   uint256 public NbDiplomes;
   uint256 public NbEntreprises;
 
-    constructor() {
-        owner = msg.sender;
-        NbAgents = 0;
-        NbEntreprises = 0;
-        NbDiplomes = 0;
-    }
-    
+  constructor() {
+      owner = msg.sender;
+      NbAgents = 0;
+      NbEntreprises = 0;
+      NbDiplomes = 0;
+  }
     
   // Un agent d’un établissement d’enseignement supérieur peut créer un compte pour
   // son établissement qui va servir à enregistrer les jeunes diplômés et leurs diplômes.
-  function create_etablissement_account(string memory nom, string memory pays, string memory adresse, string memory siteWeb) public {
+  function create_etablissement_account(string memory nom, string memory pays, string memory typeEtablissement, string memory adresse, string memory siteWeb) public {
       Etablisement memory e;
       e.Nom = nom;
       e.Pays = pays;
       e.Adresse = adresse;
       e.SiteWeb = siteWeb;
+      e.Type = typeEtablissement;
       NbAgents += 1;
       e.AgentId = NbAgents;
       AddressAgents[msg.sender] = e.AgentId;
