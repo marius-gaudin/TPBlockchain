@@ -56,9 +56,10 @@ contract DiplomeContract{
 
   mapping(uint256 => Etablisement) public Etablisements;
   mapping(address => uint256) AddressEtablisements;
-
+  mapping(uint256 => Diplome) public Diplomes;
+  
   uint256 public NbEtablisements;
-  uint256 public NbEtudiants;
+  uint256 public NbDiplomes;
 
   // Un agent d’un établissement d’enseignement supérieur peut créer un compte pour
   // son établissement qui va servir à enregistrer les jeunes diplômés et leurs diplômes.
@@ -68,10 +69,19 @@ contract DiplomeContract{
       AddressEtablisements[a] = NbEtablisements;
   }
 
-  function create_student_onStage(Etudiant memory e) private {
+  function cr /**Un agent d’un établissement d’enseignement supérieur peut créer et sauvegarder
+  un profil pour un étudiant lorsque ce dernier commence son stage de fin d’étude.
+  - Un agent d’un établissement d’enseignement supérieur peut ajouter un diplôme et mettre à jour les informations de son titulaire.
+  **/
+ceate_student_onStage(Etudiant memory e) private {
         e.exist = true;
         NbEtudiants += 1;
         Etudiants[NbEtudiants] = e;
     }
+    
+    function update_student(Diplome memory d)private{
+        NbDiplomes += 1;
+        Diplomes[NbDiplomes] = d;
+}
 
 }
