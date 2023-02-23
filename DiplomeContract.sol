@@ -67,4 +67,10 @@ contract DiplomeContract{
       AddressEtablisements[a] = NbEtablisements;
   }
 
+  function create_student_onStage(Etudiant memory e) private {
+        e.exist = true;
+        NbEtudiants += 1;
+        Etudiants[NbEtudiants] = e;
+    }
+
 }
