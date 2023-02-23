@@ -66,8 +66,7 @@ contract DiplomeContract{
 
     constructor(address tokenaddress) public {
         token = tokenaddress;
-        owner = msg.sender; // 'msg.sender' is sender of current call, contract deployer for a constructor
-
+        owner = msg.sender;
         NbEtablisements = 0;
         NbEntreprises = 0;
         NbDiplomes = 0;
