@@ -58,6 +58,7 @@ contract DiplomeContract{
   mapping(address => uint256) AddressEtablisements;
 
   uint256 public NbEtablisements;
+  uint256 public NbEtudiants;
 
   // Un agent d’un établissement d’enseignement supérieur peut créer un compte pour
   // son établissement qui va servir à enregistrer les jeunes diplômés et leurs diplômes.
