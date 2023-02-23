@@ -104,10 +104,31 @@ contract DiplomeContract {
     }
 
     // Un agent de recrutement peut créer un compte pour son entreprise.
-    function create_entreprise_account(Entreprise memory e, address a) public {
-        NbEntreprises += 1;
-        Entreprises[NbEntreprises] = e;
-        AddressEntreprises[a] = NbEntreprises;
+    function create_entreprise_account(
+        string memory nom, 
+        string memory secteur, 
+        uint256 dateCreation, 
+        string memory taille, 
+        string memory pays, 
+        string memory adresse, 
+        string memory courriel, 
+        string memory telephone,
+        string memory siteWeb) public {
+
+            Entreprise memory e;
+            e.Nom = nom;
+            e.Secteur = secteur;
+            e.DateCreation = dateCreation;
+            e.Taille = taille;
+            e.Pays = pays;
+            e.Adresse = adresse;
+            e.Courriel = courriel;
+            e.Telephone = telephone;
+            e.SiteWeb = siteWeb;
+
+            NbEntreprises += 1;
+            Entreprises[NbEntreprises] = e;
+            AddressEntreprises[msg.sender] = NbEntreprises;
     }
 
 }
