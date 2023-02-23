@@ -64,6 +64,16 @@ contract DiplomeContract{
   uint256 public NbDiplomes;
   uint256 public NbEntreprises;
 
+    constructor(address tokenaddress) public {
+        token = tokenaddress;
+        owner = msg.sender; // 'msg.sender' is sender of current call, contract deployer for a constructor
+
+        NbEtablisements = 0;
+        NbEntreprises = 0;
+        NbDiplomes = 0;
+    }
+    
+    
   // Un agent d’un établissement d’enseignement supérieur peut créer un compte pour
   // son établissement qui va servir à enregistrer les jeunes diplômés et leurs diplômes.
   function create_etablissement_account(Etablisement memory e, address a) private {
