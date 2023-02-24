@@ -93,7 +93,46 @@ contract DiplomeContract {
     un profil pour un étudiant lorsque ce dernier commence son stage de fin d’étude.
     - Un agent d’un établissement d’enseignement supérieur peut ajouter un diplôme et mettre à jour les informations de son titulaire.
     **/
-    function ceate_student_onStage(Etudiant memory e) private {
+   function ceate_student_onStage(
+        string memory nom,
+        string memory prenom,
+        uint256 dateDeNaissance,
+        string memory sexe,
+        string memory nationalite,
+        string memory statutCivil,
+        string memory adresse,
+        string memory courriel,
+        string memory telephone,
+        string memory section,
+        string memory sujetPfe,
+        string memory entrepriseStagePfe,
+        string memory nomEtPrenomMaitreDuStage,
+        uint256 dateDebutStage,
+        uint256 dateFinStage,
+        string memory evaluation
+    ) public {
+
+        uint256 id = AddressAgents[msg.sender];
+        require(id != 0, "not etablisement");
+
+        Etudiant memory e;
+        e.Nom = nom;
+        e.Prenom = prenom;
+        e.DateDeNaissance = dateDeNaissance;
+        e.Sexe = sexe;
+        e.Nationalite = nationalite;
+        e.StatutCivil = statutCivil;
+        e.Adresse = adresse;
+        e.Courriel = courriel;
+        e.Telephone = telephone;
+        e.Section = section;
+        e.SujetPfe = sujetPfe;
+        e.EntrepriseStagePfe = entrepriseStagePfe;
+        e.NomEtPrenomMaitreDuStage = nomEtPrenomMaitreDuStage;
+        e.DateDebutStage = dateDebutStage;
+        e.DateFinStage = dateFinStage;
+        e.Evaluation = evaluation;
+
         NbEtudiants += 1;
         Etudiants[NbEtudiants] = e;
     }
