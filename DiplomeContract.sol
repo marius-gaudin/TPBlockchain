@@ -14,6 +14,7 @@ contract DiplomeContract {
   }
 
   struct Etudiant {
+    uint256 Id;
     string Nom;
     string Prenom;
     uint256 DateDeNaissance;
@@ -55,12 +56,12 @@ contract DiplomeContract {
       string SiteWeb;
   }
 
-  mapping(uint256 => Etablisement) public Etablisements;
   mapping(address => uint256) AddressAgents;
+  mapping(address => uint256) public AddressEntreprises;
+  mapping(uint256 => Etablisement) public Etablisements;
   mapping(uint256 => Diplome) public Diplomes;
   mapping(uint256 => Entreprise) public Entreprises;
-  mapping(address => uint256) public AddressEntreprises;
-  mapping(uint256 => Etudiant) Etudiants;
+  mapping(uint256 => Etudiant) public Etudiants;
 
   uint256 public NbAgents;
   uint256 public NbDiplomes;
@@ -93,7 +94,20 @@ contract DiplomeContract {
     un profil pour un étudiant lorsque ce dernier commence son stage de fin d’étude.
     - Un agent d’un établissement d’enseignement supérieur peut ajouter un diplôme et mettre à jour les informations de son titulaire.
     **/
-    function ceate_student_onStage(Etudiant memory e) private {
+    function ceate_student_onStage(
+        string memory nom,
+        string memory prenom
+    ) public {
+
+        uint256 id = AddressAgents[msg.sender];
+        require(id != 0, "not etablisement");
+
+        // I reduce the number of data
+        // else I could get an error "stack to deep"
+        Etudiant memory e;
+        e.Nom = nom;
+        e.Prenom = prenom;
+
         NbEtudiants += 1;
         Etudiants[NbEtudiants] = e;
     }
@@ -104,7 +118,6 @@ contract DiplomeContract {
     }
 
     function create_diplome(Diplome memory d) private {
-        d.exist = true;
         NbDiplomes += 1;
         Diplomes[NbDiplomes] = d;
     }
@@ -146,8 +159,10 @@ function add_diplome(
     string memory specialite, 
     string memory mention, 
     uint256 date_obtention) public {
-        require(AddressEtablisements[msg.sender] == id_etablisement, "not authorized to create diploma for this establishment");
-        require(Etudiants[id_titulaire].exists == true, "student does not exist");
+        require(AddressAgents[msg.sender] == id_etablisement, "not authorized to create diploma for this establishment");
+
+        uint256 id = Etudiants[id_titulaire].Id;
+        require(id != 0, "student does not exist");
         
         Diplome memory d;
         d.EtudiantId = id_titulaire;
